@@ -15,7 +15,7 @@ from src.utils import save_object,evaluate_model,load_object
 
 @dataclass
 class ModelTrainerConfig:
-    trained_model_file_path = os.join.path("artifacts","model.pkl")
+    trained_model_file_path = os.path.join("artifacts","model.pkl")
 
 class ModelTrainer:
     def __init__(self):
@@ -36,8 +36,8 @@ class ModelTrainer:
                 "Linear Regression": LinearRegression(),
                 "ADABoost": AdaBoostRegressor(),
                 "Gradient Boosting": GradientBoostingRegressor(),
-                "CatBoost": CatBoostRegressor(verbose=True),
-                "XGBoost":XGBRegressor()
+                "CatBoost": CatBoostRegressor()
+                # "XGBoost":XGBRegressor()
             }
             
             params = {
@@ -61,11 +61,11 @@ class ModelTrainer:
                     'depth':[6,8,10],
                     'learning_rate':[0.01, 0.05, 0.1],
                     'iterations':[30, 50, 100]
-                },
-                "XGBoost":{
-                    'learning_rate':[.1,.01,.05,.001],
-                    'n_estimators':[8,16,32,64,128,256]
                 }
+                # "XGBoost":{
+                #     'learning_rate':[.1,.01,.05,.001],
+                #     'n_estimators':[8,16,32,64,128,256]
+                # }
             }
             
             model_report:dict = evaluate_model(X_train=X_train,y_train=y_train,X_test=X_test,
@@ -83,7 +83,7 @@ class ModelTrainer:
                 raise CustomException("No good model")
             
             logging.info("Best model found")
-            
+            logging.info(f"Best model is {best_model_name}")
             save_object(
                 file_path=self.model_trainer_config.trained_model_file_path,
                 obj=best_model

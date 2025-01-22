@@ -39,22 +39,24 @@ class Data_Transformation:
             
             num_pipeline = Pipeline(
                 steps=[
-                    ("imputer",SimpleImputer(strategy="median"))
+                    ("imputer",SimpleImputer(strategy="median")),
                     ("scaler",StandardScaler())
                 ]
             )
             
             cat_pipeline = Pipeline(
                 steps = [
-                    ("imputer",SimpleImputer(strategy="most_frequent"))
-                    ("onehotencoder",OneHotEncoder())
+                    ("imputer",SimpleImputer(strategy="most_frequent")),
+                    ("onehotencoder",OneHotEncoder()),
                     ("scaling",StandardScaler(with_mean=False))
                 ]
             )
             
             preprocessor = ColumnTransformer(
-                ["num_pipeline",num_pipeline,numerical_columns]
-                ["cat_pipelie",cat_pipeline,categorical_columns]
+                transformers=[
+                ("num_pipeline",num_pipeline,numerical_columns),
+                ("cat_pipelie",cat_pipeline,categorical_columns)
+                ]
             )
             logging.info("Preprocessor object created")
             return preprocessor

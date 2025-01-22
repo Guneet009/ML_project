@@ -17,7 +17,7 @@ def save_object(file_path,obj):
         os.makedirs(dir_path,exist_ok=True)
         
         with open(file_path,"wb") as file_obj:
-            pickle.dump(obj,file_path)
+            pickle.dump(obj,file_obj)
         
     except Exception as e:
         raise CustomException(e, sys)
@@ -28,8 +28,8 @@ def evaluate_model(X_train,y_train,X_test,y_test,models,param):
         report={}
         
         for i in range(len(list(models))):
-            model = list(models.value())[i]
-            para = param[list(model.key())[i]]
+            model = list(models.values())[i]
+            para = param[list(models.keys())[i]]
             
             gs = GridSearchCV(model,para,cv=3)
             gs.fit(X_train,y_train)
@@ -43,7 +43,7 @@ def evaluate_model(X_train,y_train,X_test,y_test,models,param):
             train_model_score = r2_score(y_train,y_train_pred)
             test_model_score = r2_score(y_test,y_test_pred)
             
-            report[list(model.keys())[i]] = test_model_score
+            report[list(models.keys())[i]] = test_model_score
         
         return report
     
