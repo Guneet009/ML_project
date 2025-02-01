@@ -1,15 +1,33 @@
-name: Hello World Manual Trigger
-
-on:  
-  workflow_dispatch:  # Enables manual trigger
+# name: Hello World
+# on: [push,workflow_dispatch]
+# jobs:
+#     test:
+#       runs-on: ununtu-latest
+#       steps:
+#         - name: Get Code
+#         - uses: actions/checkout@v4
+#         - name: install python
+#         - uses: actions/setup-python@v5
+#           with:
+#            python-version: '3.12'
+#         - name: Install dependencies
+#           run: pip install -r requirements.txt
+name: Hello World
+on: [push, workflow_dispatch]
 
 jobs:
-  say-hello:
-    runs-on: ubuntu-latest
+  test:
+    runs-on: ubuntu-latest  # Fixed typo
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Get Code
+        uses: actions/checkout@v4  # Fixed indentation and removed extra '-'
 
-      - name: Echo Hello World
-        run: echo "Hello World"
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
