@@ -45,5 +45,5 @@ jobs:
         with:
           python-version: '3.12'
       - name: Deployment
-        run: echo '{{toJSON(github)}}'
+        run: echo '${{toJSON(github)}}'
 
